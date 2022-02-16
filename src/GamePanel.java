@@ -6,170 +6,205 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	static final int SCREEN_SIZE = 384;
 	static final int LABEL_SIZE = SCREEN_SIZE/3;
-	JButton boxTL,boxTM,boxTR,boxML,boxMM,boxMR,boxBL,boxBM,boxBR;
-	boolean boxTL_p,boxTM_p,boxTR_p,boxML_p,boxMM_p,boxMR_p,boxBL_p,boxBM_p,boxBR_p = false;
-	boolean winner = false;
+	JButton [] boxes = new JButton[9];
+	boolean playerx_turn;
 	
+	ImageIcon imageBG = new ImageIcon("TTT-Field.png");
+	ImageIcon imageX = new ImageIcon("TTT-X-Box.png");
+	ImageIcon imageO = new ImageIcon("TTT-O-Box.png");
+	ImageIcon imageXwins = new ImageIcon("TTT-X-wins.png");
+	ImageIcon imageOwins = new ImageIcon("TTT-O-wins.png");
+		
 	GamePanel(){
-		ImageIcon imageBG = new ImageIcon("TTT-Field.png");
 				
-		boxTL = new JButton();
-		boxTM = new JButton();
-		boxTR = new JButton();
-		boxML = new JButton();
-		boxMM = new JButton();
-		boxMR = new JButton();
-		boxBL = new JButton();
-		boxBM = new JButton();
-		boxBR = new JButton();
-		
-		boxTL.setIcon(imageBG);
-		boxTM.setIcon(imageBG);
-		boxTR.setIcon(imageBG);
-		boxML.setIcon(imageBG);
-		boxMM.setIcon(imageBG);
-		boxMR.setIcon(imageBG);
-		boxBL.setIcon(imageBG);
-		boxBM.setIcon(imageBG);
-		boxBR.setIcon(imageBG);
-		
-		boxTL.setBounds(0, 0, LABEL_SIZE, LABEL_SIZE);
-		boxTM.setBounds(128, 0, LABEL_SIZE, LABEL_SIZE);
-		boxTR.setBounds(256, 0, LABEL_SIZE, LABEL_SIZE);
-		boxML.setBounds(0, 128, LABEL_SIZE, LABEL_SIZE);
-		boxMM.setBounds(128, 128, LABEL_SIZE, LABEL_SIZE);
-		boxMR.setBounds(256, 128, LABEL_SIZE, LABEL_SIZE);
-		boxBL.setBounds(0, 256, LABEL_SIZE, LABEL_SIZE);
-		boxBM.setBounds(128, 256, LABEL_SIZE, LABEL_SIZE);
-		boxBR.setBounds(256, 256, LABEL_SIZE, LABEL_SIZE);
-		
 		this.setPreferredSize(new Dimension(SCREEN_SIZE,SCREEN_SIZE));
 		this.setBackground(new Color(0,255,0));
 		this.setFocusable(true);
-		this.setLayout(null);
+		this.setLayout(new GridLayout(3,3));
 		
-		this.add(boxTL);
-		this.add(boxTM);
-		this.add(boxTR);
-		this.add(boxML);
-		this.add(boxMM);
-		this.add(boxMR);
-		this.add(boxBL);
-		this.add(boxBM);
-		this.add(boxBR);
-		
-		boxTL.addActionListener(this);
-		boxTM.addActionListener(this);
-		boxTR.addActionListener(this);
-		boxML.addActionListener(this);
-		boxMM.addActionListener(this);
-		boxMR.addActionListener(this);
-		boxBL.addActionListener(this);
-		boxBM.addActionListener(this);
-		boxBR.addActionListener(this);
-		
-		startGame();
-	}
-	public void startGame() {		
+		for(int i=0;i<9;i++) {
+			boxes[i] = new JButton();
+			this.add(boxes[i]);
+			boxes[i].setFocusable(false);
+			boxes[i].addActionListener(this);
+			boxes[i].setIcon(imageBG);
+					
+		}
+		firstTurn();
 		
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ImageIcon imageBG = new ImageIcon("TTT-X-Box.png");
-		
-		if((e.getSource() == boxTL)&&(boxTL_p == false)) {
-			boxTL.setIcon(imageBG);
-			boxTL_p = true;
-		
-		}
-		if((e.getSource() == boxTM)&&(boxTM_p == false)) {
-			boxTM.setIcon(imageBG);
-			boxTM_p = true;
-		
-		}
-		if((e.getSource() == boxTR)&&(boxTR_p == false)) {
-			boxTR.setIcon(imageBG);
-			boxTR_p = true;
-		
-		}
-		if((e.getSource() == boxML)&&(boxML_p == false)) {
-			boxML.setIcon(imageBG);
-			boxML_p = true;
-		
-		}
-		if((e.getSource() == boxMM)&&(boxMM_p == false)) {
-			boxMM.setIcon(imageBG);
-			boxMM_p = true;
-		
-		}
-		if((e.getSource() == boxMR)&&(boxMR_p == false)) {
-			boxMR.setIcon(imageBG);
-			boxMR_p = true;
-		
-		}
-		if((e.getSource() == boxBL)&&(boxBL_p == false)) {
-			boxBL.setIcon(imageBG);
-			boxBL_p = true;
-		
-		}
-		if((e.getSource() == boxBM)&&(boxBM_p == false)) {
-			boxBM.setIcon(imageBG);
-			boxBM_p = true;
-		
-		}
-		if((e.getSource() == boxBR)&&(boxBR_p == false)) {
-			boxBR.setIcon(imageBG);
-			boxBR_p = true;
-		
-		}
-		imageBG = new ImageIcon("TTT-O-Box.png");
-		
-		if((e.getSource() == boxTL)&&(boxTL_p == false)) {
-			boxTL.setIcon(imageBG);
-			boxTL_p = true;
 			
+		for(int i=0;i<9;i++) {
+			if(e.getSource()==boxes[i]) {
+				if(playerx_turn) {
+					if(boxes[i].getIcon()==imageBG) {
+						boxes[i].setIcon(imageX);
+						playerx_turn=false;
+						check();
+					}
+				}
+				else {
+					if(boxes[i].getIcon()==imageBG) {
+						boxes[i].setIcon(imageO);
+						playerx_turn=true;
+						check();
+					}
+				}
+			}
 		}
-		if((e.getSource() == boxTM)&&(boxTM_p == false)) {
-			boxTM.setIcon(imageBG);
-			boxTM_p = true;
-			
+	}
+	public void firstTurn() {		
+		playerx_turn=true;
+	}
+	public void check() {
+	
+		if( (boxes[0].getIcon()==imageX)&&
+			(boxes[1].getIcon()==imageX)&&
+			(boxes[2].getIcon()==imageX)) {
+			xWins(0,1,2);
 		}
-		if((e.getSource() == boxTR)&&(boxTR_p == false)) {
-			boxTR.setIcon(imageBG);
-			boxTR_p = true;
-			
+		if( (boxes[3].getIcon()==imageX) &&
+			(boxes[4].getIcon()==imageX) &&
+			(boxes[5].getIcon()==imageX)) {
+			xWins(3,4,5);
 		}
-		if((e.getSource() == boxML)&&(boxML_p == false)) {
-			boxML.setIcon(imageBG);
-			boxML_p = true;
-			
+		if(	(boxes[6].getIcon()==imageX) &&
+			(boxes[7].getIcon()==imageX) &&
+			(boxes[8].getIcon()==imageX)) {
+			xWins(6,7,8);
 		}
-		if((e.getSource() == boxMM)&&(boxMM_p == false)) {
-			boxMM.setIcon(imageBG);
-			boxMM_p = true;
-			
+		if(	(boxes[0].getIcon()==imageX) &&
+			(boxes[3].getIcon()==imageX) &&
+			(boxes[6].getIcon()==imageX)) {
+			xWins(0,3,6);
 		}
-		if((e.getSource() == boxMR)&&(boxMR_p == false)) {
-			boxMR.setIcon(imageBG);
-			boxMR_p = true;
-			
+		if(	(boxes[1].getIcon()==imageX) &&
+			(boxes[4].getIcon()==imageX) &&
+			(boxes[7].getIcon()==imageX)) {
+			xWins(1,4,7);
 		}
-		if((e.getSource() == boxBL)&&(boxBL_p == false)) {
-			boxBL.setIcon(imageBG);
-			boxBL_p = true;
-			
+		if(	(boxes[2].getIcon()==imageX) &&
+			(boxes[5].getIcon()==imageX) &&
+			(boxes[8].getIcon()==imageX)) {
+			xWins(2,5,8);
 		}
-		if((e.getSource() == boxBM)&&(boxBM_p == false)) {
-			boxBM.setIcon(imageBG);
-			boxBM_p = true;
-			
+		if(	(boxes[0].getIcon()==imageX) &&
+			(boxes[4].getIcon()==imageX) &&
+			(boxes[8].getIcon()==imageX)) {
+			xWins(0,4,8);
 		}
-		if((e.getSource() == boxBR)&&(boxBR_p == false)) {
-			boxBR.setIcon(imageBG);
-			boxBR_p = true;
-			
+		if(	(boxes[2].getIcon()==imageX) &&
+			(boxes[4].getIcon()==imageX) &&
+			(boxes[6].getIcon()==imageX)) {
+			xWins(2,4,6);
 		}
 		
+		if(	(boxes[0].getIcon()==imageO) &&
+			(boxes[1].getIcon()==imageO) &&
+			(boxes[2].getIcon()==imageO)) {
+			oWins(0,1,2);
+		}
+		if(	(boxes[3].getIcon()==imageO) &&
+			(boxes[4].getIcon()==imageO) &&
+			(boxes[5].getIcon()==imageO)) {
+			oWins(3,4,5);
+		}
+		if(	(boxes[6].getIcon()==imageO) &&
+			(boxes[7].getIcon()==imageO) &&
+			(boxes[8].getIcon()==imageO)) {
+			oWins(6,7,8);
+		}
+		if(	(boxes[0].getIcon()==imageO) &&
+			(boxes[3].getIcon()==imageO) &&
+			(boxes[6].getIcon()==imageO)) {
+			oWins(0,3,6);
+		}
+		if(	(boxes[1].getIcon()==imageO) &&
+			(boxes[4].getIcon()==imageO) &&
+			(boxes[7].getIcon()==imageO)) {
+			oWins(1,4,7);
+		}
+		if(	(boxes[2].getIcon()==imageO) &&
+			(boxes[5].getIcon()==imageO) &&
+			(boxes[8].getIcon()==imageO)) {
+			oWins(2,5,8);
+		}
+		if(	(boxes[0].getIcon()==imageO) &&
+			(boxes[4].getIcon()==imageO) &&
+			(boxes[8].getIcon()==imageO)) {
+			oWins(0,4,8);
+		}
+		if(	(boxes[2].getIcon()==imageO) &&
+			(boxes[4].getIcon()==imageO) &&
+			(boxes[6].getIcon()==imageO)) {
+			oWins(2,4,6);
+		}
+		
+	}
+	public void xWins(int a,int b,int c) {
+		
+		for(int i=0;i<3;i++) {
+			boxes[a].setIcon(imageXwins);
+			boxes[b].setIcon(imageXwins);
+			boxes[c].setIcon(imageXwins);
+			 
+		}
+		
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			/* 
+			boxes[a].setIcon(imageX);
+			boxes[b].setIcon(imageX);
+			boxes[c].setIcon(imageX);
+			
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+		
+		clear();
+	}
+	public void oWins(int a,int b,int c) {
+		
+		for(int i=0;i<3;i++) {
+			boxes[a].setIcon(imageOwins);
+			boxes[b].setIcon(imageOwins);
+			boxes[c].setIcon(imageOwins);
+		} 
+		/*	
+		try {
+			Thread.sleep(300);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+			/* 
+			boxes[a].setIcon(imageO);
+			boxes[b].setIcon(imageO);
+			boxes[c].setIcon(imageO);
+			
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+		
+		//clear();
+	}
+	public void clear() {
+		for(int i=0;i<9;i++) {
+			boxes[i].setIcon(imageBG);
+		}
+		firstTurn();
 	}
 }
 
