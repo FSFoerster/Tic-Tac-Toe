@@ -8,6 +8,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	static final int LABEL_SIZE = SCREEN_SIZE/3;
 	JButton boxTL,boxTM,boxTR,boxML,boxMM,boxMR,boxBL,boxBM,boxBR;
 	boolean boxTL_p,boxTM_p,boxTR_p,boxML_p,boxMM_p,boxMR_p,boxBL_p,boxBM_p,boxBR_p = false;
+	boolean winner = false;
 	
 	GamePanel(){
 		ImageIcon imageBG = new ImageIcon("TTT-Field.png");
@@ -74,52 +75,101 @@ public class GamePanel extends JPanel implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		ImageIcon imageBG = new ImageIcon("TTT-X-Box.png");
+		
 		if((e.getSource() == boxTL)&&(boxTL_p == false)) {
-			//boxTL.setIcon("X-Box");
+			boxTL.setIcon(imageBG);
+			boxTL_p = true;
+		
+		}
+		if((e.getSource() == boxTM)&&(boxTM_p == false)) {
+			boxTM.setIcon(imageBG);
+			boxTM_p = true;
+		
+		}
+		if((e.getSource() == boxTR)&&(boxTR_p == false)) {
+			boxTR.setIcon(imageBG);
+			boxTR_p = true;
+		
+		}
+		if((e.getSource() == boxML)&&(boxML_p == false)) {
+			boxML.setIcon(imageBG);
+			boxML_p = true;
+		
+		}
+		if((e.getSource() == boxMM)&&(boxMM_p == false)) {
+			boxMM.setIcon(imageBG);
+			boxMM_p = true;
+		
+		}
+		if((e.getSource() == boxMR)&&(boxMR_p == false)) {
+			boxMR.setIcon(imageBG);
+			boxMR_p = true;
+		
+		}
+		if((e.getSource() == boxBL)&&(boxBL_p == false)) {
+			boxBL.setIcon(imageBG);
+			boxBL_p = true;
+		
+		}
+		if((e.getSource() == boxBM)&&(boxBM_p == false)) {
+			boxBM.setIcon(imageBG);
+			boxBM_p = true;
+		
+		}
+		if((e.getSource() == boxBR)&&(boxBR_p == false)) {
+			boxBR.setIcon(imageBG);
+			boxBR_p = true;
+		
+		}
+		imageBG = new ImageIcon("TTT-O-Box.png");
+		
+		if((e.getSource() == boxTL)&&(boxTL_p == false)) {
+			boxTL.setIcon(imageBG);
 			boxTL_p = true;
 			
 		}
 		if((e.getSource() == boxTM)&&(boxTM_p == false)) {
-			//boxTM.setIcon("X-Box");
+			boxTM.setIcon(imageBG);
 			boxTM_p = true;
 			
 		}
 		if((e.getSource() == boxTR)&&(boxTR_p == false)) {
-			//boxTR.setIcon("X-Box");
+			boxTR.setIcon(imageBG);
 			boxTR_p = true;
 			
 		}
 		if((e.getSource() == boxML)&&(boxML_p == false)) {
-			//boxML.setIcon("X-Box");
+			boxML.setIcon(imageBG);
 			boxML_p = true;
 			
 		}
 		if((e.getSource() == boxMM)&&(boxMM_p == false)) {
-			//boxMM.setIcon("X-Box");
+			boxMM.setIcon(imageBG);
 			boxMM_p = true;
 			
 		}
 		if((e.getSource() == boxMR)&&(boxMR_p == false)) {
-			//boxMR.setIcon("X-Box");
+			boxMR.setIcon(imageBG);
 			boxMR_p = true;
 			
 		}
 		if((e.getSource() == boxBL)&&(boxBL_p == false)) {
-			//boxBL.setIcon("X-Box");
+			boxBL.setIcon(imageBG);
 			boxBL_p = true;
 			
 		}
 		if((e.getSource() == boxBM)&&(boxBM_p == false)) {
-			//boxBM.setIcon("X-Box");
+			boxBM.setIcon(imageBG);
 			boxBM_p = true;
 			
 		}
 		if((e.getSource() == boxBR)&&(boxBR_p == false)) {
-			//boxBR.setIcon("X-Box");
+			boxBR.setIcon(imageBG);
 			boxBR_p = true;
 			
 		}
 		
-		
 	}
 }
+
