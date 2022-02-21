@@ -1,19 +1,21 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.net.URL;
-
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.*;
+import java.io.*;
 
 public class GamePanel extends JPanel implements ActionListener{
 	
 	static final int SCREEN_LENGTH = 384;
 	static final int SCREEN_HEIGHT = 512;
 	static final int LABEL_SIZE = SCREEN_LENGTH/3;
+	Desktop desktop = java.awt.Desktop.getDesktop();
 	JButton [] boxes = new JButton[9];
 	JButton nextGame = new JButton();
 	JButton useless = new JButton();
 	JButton github = new JButton();
-	boolean playerx_turn;
+	int player_turn = 0;
 	boolean full;
 	
 	ImageIcon imageBG = new ImageIcon("TTT-Field.png");
@@ -57,19 +59,22 @@ public class GamePanel extends JPanel implements ActionListener{
 			
 		for(int i=0;i<9;i++) {
 			if(e.getSource()==boxes[i]) {
-				if(playerx_turn) {
+				if(player_turn == 0) {
 					if(boxes[i].getIcon()==imageBG) {
 						boxes[i].setIcon(imageX);
-						playerx_turn=false;
+						player_turn=1;
+						check();
+					}
+				}
+				else if(player_turn == 1){
+					if(boxes[i].getIcon()==imageBG) {
+						boxes[i].setIcon(imageO);
+						player_turn=0;
 						check();
 					}
 				}
 				else {
-					if(boxes[i].getIcon()==imageBG) {
-						boxes[i].setIcon(imageO);
-						playerx_turn=true;
-						check();
-					}
+					System.out.println("Ich mag Kuchen");
 				}
 			}
 		}
@@ -77,18 +82,32 @@ public class GamePanel extends JPanel implements ActionListener{
 			clear();
 		}
 		if(e.getSource()==useless) {
-			System.out.println("I am going to kill YOU!!");
-			System.out.println("Why did YOU press the button?");
-			System.out.println("See ya tomorrow... :> ");
+			
+			Desktop use = Desktop.getDesktop();
+			try {
+				use.browse(new URI("https://theuselessweb.com/"));
+			} catch (IOException | URISyntaxException e1) {
+				// TODO Auto-generated catch block
+				System.out.println("There was an error lol.");
+				e1.printStackTrace();
+			}
+			
 			System.exit(0);
 		}
 		if(e.getSource()==github) {
-			System.out.println("In Progress...");
-			System.out.println("https://github.com/FSFoerster");
+			
+			Desktop gitURL = Desktop.getDesktop();
+			try {
+				gitURL.browse(new URI("https://github.com/FSFoerster"));
+			} catch (IOException | URISyntaxException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 		}
 	}
 	public void firstTurn() {		
-		playerx_turn=true;
+		player_turn=0;
 	}
 	public void check() {
 	
@@ -195,6 +214,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			boxes[b].setIcon(imageXwins);
 			boxes[c].setIcon(imageXwins);
 		}
+		player_turn=2;
 		
 	}	
 	public void oWins(int a,int b,int c) {
@@ -202,8 +222,9 @@ public class GamePanel extends JPanel implements ActionListener{
 		for(int i=0;i<3;i++) {
 			boxes[a].setIcon(imageOwins);
 			boxes[b].setIcon(imageOwins);
-			boxes[c].setIcon(imageOwins);		
-		} 
+			boxes[c].setIcon(imageOwins);
+		}
+		player_turn=2;
 		
 	}
 	public void clear() {
